@@ -62,8 +62,9 @@ class Tx_Vhs_ViewHelpers_Format_MarkdownViewHelper extends Tx_Fluid_Core_ViewHel
 	 * @return string
 	 */
 	public function render($text = NULL, $trim = TRUE, $htmlentities = FALSE) {
-		$this->markdownExecutablePath = trim(shell_exec('which markdown'));
-		if (is_executable($this->markdownExecutablePath) === FALSE) {
+		$this->markdownExecutablePath = \TYPO3\CMS\Core\Utility\CommandUtility::getCommand('markdown');
+
+		if ($this->markdownExecutablePath === FALSE) {
 			throw new Exception('Use of Markdown requires the "markdown" shell utility to be installed an accessible; this' .
 				' binary could not be found in any of your configured paths available to this script', 1350511561);
 		}
